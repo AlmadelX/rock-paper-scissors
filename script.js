@@ -6,15 +6,28 @@ function getComputerChoice() {
   return moves[choice];
 }
 
-function normalizePlayerChoice(playerSelection) {
-  // Normalize the player's choice to "Rock", "Paper", "Scissors"
-  playerSelection = playerSelection.toLowerCase();
-  playerSelection = playerSelection[0].toUpperCase() + playerSelection.substr(1);
+function getPlayerChoice(roundNumber) {
+  // Ask the player for their choice until they enter the valid one
+  let keepAsking = true;
+  let playerSelection;
+
+  while (keepAsking) {
+    playerSelection = prompt(`Round #${roundNumber}. Your choice:`);
+    if (playerSelection === null || playerSelection === "") {
+      continue;
+    }
+
+    // Validate and normalize the player's choice to "Rock", "Paper", "Scissors"
+    playerSelection = playerSelection.toLowerCase();
+    playerSelection = playerSelection[0].toUpperCase() + playerSelection.substr(1);
+
+    keepAsking = playerSelection !== "Rock" && playerSelection !== "Paper" && playerSelection !== "Scissors";
+  }
 
   return playerSelection;
 }
 
-function getRoundResult(playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection) {
   // Determine the result of the round
   if (playerSelection === computerSelection) {
     return "Draw";
@@ -31,23 +44,57 @@ function getRoundResult(playerSelection, computerSelection) {
   return "Lose";
 }
 
-function playRound(playerSelection, computerSelection) {
-  playerSelection = normalizePlayerChoice(playerSelection);
-  const result = getRoundResult(playerSelection, computerSelection);
-
-  // Build the message, describing the result and return it
+function getRoundMessage(result, playerSelection, computerSelection) {
+  // Build the message, describing the result
   let message;
-  if (result === "Win") {
-    message = `You Win! ${playerSelection} beats ${computerSelection}`;
-  } else if (result === "Draw") {
-    message = `Draw! ${playerSelection}`;
-  } else {
-    message = `You Lose! ${computerSelection} beats ${playerSelection}`;
+  switch (result) {
+    case "Win":
+      message = `You Win! ${playerSelection} beats ${computerSelection}`;
+      break;
+    case "Draw":
+      message = `Draw! ${playerSelection}`;
+      break;
+    case "Lose":
+      message = `You Lose! ${computerSelection} beats ${playerSelection}`;
   }
 
   return message;
 }
 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+function getGameResult(score) {
+  // Get the overall result
+  if (score > 2.5) {
+    return "You Win!";
+  } else if (score === 2.5) {
+    return "Draw!";
+  } else {
+    return "You Lose!";
+  }
+}
+
+function game() {
+  const ROUNDS = 5;
+  let score = 0;
+
+  for (let i = 1; i <= 5; ++i) {
+    // Play the round and print the message describing the round
+    const playerSelection = getPlayerChoice(i);
+    const computerSelection = getComputerChoice();
+    const result = playRound(playerSelection, computerSelection);
+    console.log(getRoundMessage(result, playerSelection, computerSelection));
+
+    // Update the score
+    switch (result) {
+      case "Win":
+        score += 1.0;
+        break;
+      case "Draw":
+        score += 0.5;
+    }
+  }
+
+  // Print the final result
+  alert(getGameResult(score));
+}
+
+game();
