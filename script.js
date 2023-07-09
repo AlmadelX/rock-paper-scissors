@@ -1,3 +1,5 @@
+const ROUNDS = 5;
+
 function getComputerChoice() {
   // Computer choice is random
   const choice = Math.floor(Math.random() * 3);
@@ -62,10 +64,12 @@ function getRoundMessage(result, playerSelection, computerSelection) {
 }
 
 function getGameResult(score) {
+  const requiredScore = ROUNDS / 2;
+
   // Get the overall result
-  if (score > 2.5) {
+  if (score > requiredScore) {
     return "You Win!";
-  } else if (score === 2.5) {
+  } else if (score === requiredScore) {
     return "Draw!";
   } else {
     return "You Lose!";
@@ -73,7 +77,6 @@ function getGameResult(score) {
 }
 
 function game() {
-  const ROUNDS = 5;
   let score = 0;
 
   for (let i = 1; i <= 5; ++i) {
