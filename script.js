@@ -27,7 +27,7 @@ function getPlayerChoice(roundNumber) {
     }
 
     playerSelection = playerSelection.toLowerCase();
-    playerSelection = playerSelection[0].toUpperCase() + playerSelection.substr(1);
+    playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1);
 
     keepAsking = playerSelection !== "Rock" && playerSelection !== "Paper" && playerSelection !== "Scissors";
   }
