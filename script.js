@@ -15,11 +15,17 @@ function getPlayerChoice(roundNumber) {
 
   while (keepAsking) {
     playerSelection = prompt(`Round #${roundNumber}. Your choice:`);
-    if (playerSelection === null || playerSelection === "") {
-      continue;
+
+    // Report that user canceled the prompt
+    if (playerSelection === null) {
+      return null;
     }
 
     // Validate and normalize the player's choice to "Rock", "Paper", "Scissors"
+    if (playerSelection === "") {
+      continue;
+    }
+
     playerSelection = playerSelection.toLowerCase();
     playerSelection = playerSelection[0].toUpperCase() + playerSelection.substr(1);
 
@@ -80,8 +86,14 @@ function game() {
   let score = 0;
 
   for (let i = 1; i <= 5; ++i) {
-    // Play the round and print the message describing the round
+    // Get player's choice and finish the game in case of cancelation
     const playerSelection = getPlayerChoice(i);
+    if (playerSelection === null) {
+      console.log("You exited the game");
+      return;
+    }
+
+    // Play the round and print the message describing the round
     const computerSelection = getComputerChoice();
     const result = playRound(playerSelection, computerSelection);
     console.log(getRoundMessage(result, playerSelection, computerSelection));
