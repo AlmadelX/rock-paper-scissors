@@ -25,6 +25,7 @@ html, body, .container {
   font-size: 48px;
   font-weight: 700;
   margin-bottom: 16px;
+  text-align: center;
 }
 
 .game {
