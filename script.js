@@ -81,3 +81,12 @@ function getGameResult(score) {
     return "You Lose!";
   }
 }
+
+const buttons = document.querySelectorAll(".buttons button");
+buttons.forEach(button => button.addEventListener("click", e => {
+  // Get player's choice, play the round
+  const playerSelection = button.textContent;
+  const computerSelection = getComputerChoice();
+  const result = playRound(playerSelection, computerSelection);
+  console.log(getRoundMessage(result, playerSelection, computerSelection));
+}));
