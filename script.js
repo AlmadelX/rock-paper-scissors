@@ -81,35 +81,3 @@ function getGameResult(score) {
     return "You Lose!";
   }
 }
-
-function game() {
-  let score = 0;
-
-  for (let i = 1; i <= 5; ++i) {
-    // Get player's choice and finish the game in case of cancelation
-    const playerSelection = getPlayerChoice(i);
-    if (playerSelection === null) {
-      console.log("You exited the game");
-      return;
-    }
-
-    // Play the round and print the message describing the round
-    const computerSelection = getComputerChoice();
-    const result = playRound(playerSelection, computerSelection);
-    console.log(getRoundMessage(result, playerSelection, computerSelection));
-
-    // Update the score
-    switch (result) {
-      case "Win":
-        score += 1.0;
-        break;
-      case "Draw":
-        score += 0.5;
-    }
-  }
-
-  // Print the final result
-  alert(getGameResult(score));
-}
-
-game();
