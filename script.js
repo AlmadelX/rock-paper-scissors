@@ -82,11 +82,45 @@ function getGameResult(score) {
   }
 }
 
+let playerScore = 0;
+let computerScore = 0;
+
 const buttons = document.querySelectorAll(".buttons button");
 buttons.forEach(button => button.addEventListener("click", e => {
   // Get player's choice, play the round
   const playerSelection = button.textContent;
   const computerSelection = getComputerChoice();
   const result = playRound(playerSelection, computerSelection);
-  console.log(getRoundMessage(result, playerSelection, computerSelection));
+
+  // Display round result
+  const roundResultElement = document.querySelector(".round-result");
+  const message = getRoundMessage(result, playerSelection, computerSelection);
+  roundResultElement.textContent = message;
+
+  // Update the score
+  const scoreElement = document.querySelector(".score");
+  switch (result) {
+    case "Win":
+      ++playerScore;
+      break;
+    case "Lose":
+      ++computerScore;
+      break;
+  }
+  scoreElement.textContent = playerScore;
+
+  // Check if someone's won and display the game result if so
+  if (playerScore === 5 || computerScore === 5) {
+    const gameElement = document.querySelector(".game");
+    gameElement.style.display = "none";
+
+    const gameResultElement = document.querySelector(".game-result");
+    if (playerScore === 5) {
+      gameResultElement.textContent = "You Win!";
+      gameResultElement.style.color = "green";
+    } else if (computerScore === 5) {
+      gameResultElement.textContent = "You Lose!";
+      gameResultElement.style.color = "red";
+    }
+  }
 }));

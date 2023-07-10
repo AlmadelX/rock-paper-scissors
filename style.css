@@ -17,9 +17,6 @@ html, body, .container {
 }
 
 .content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   max-width: 500px;
   width: 100%;
 }
@@ -30,7 +27,14 @@ html, body, .container {
   margin-bottom: 16px;
 }
 
-.content p {
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.game p {
   font-size: 24px;
   font-weight: 300;
   margin-bottom: 8px;
@@ -55,4 +59,10 @@ html, body, .container {
   box-shadow: 2px 4px 16px rgba(0,0,0,.2);
   font-size: 24px;
   font-weight: 300;
+}
+
+.game-result {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
 }
