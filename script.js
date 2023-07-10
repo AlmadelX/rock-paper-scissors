@@ -1,4 +1,5 @@
-const ROUNDS = 5;
+// The player getting GOAL points wins
+const GOAL = 5;
 
 function getComputerChoice() {
   // Computer choice is random
@@ -6,33 +7,6 @@ function getComputerChoice() {
   const moves = ["Rock", "Paper", "Scissors"];
 
   return moves[choice];
-}
-
-function getPlayerChoice(roundNumber) {
-  // Ask the player for their choice until they enter the valid one
-  let keepAsking = true;
-  let playerSelection;
-
-  while (keepAsking) {
-    playerSelection = prompt(`Round #${roundNumber}. Your choice:`);
-
-    // Report that user canceled the prompt
-    if (playerSelection === null) {
-      return null;
-    }
-
-    // Validate and normalize the player's choice to "Rock", "Paper", "Scissors"
-    if (playerSelection === "") {
-      continue;
-    }
-
-    playerSelection = playerSelection.toLowerCase();
-    playerSelection = playerSelection[0].toUpperCase() + playerSelection.slice(1);
-
-    keepAsking = playerSelection !== "Rock" && playerSelection !== "Paper" && playerSelection !== "Scissors";
-  }
-
-  return playerSelection;
 }
 
 function playRound(playerSelection, computerSelection) {
@@ -110,15 +84,15 @@ buttons.forEach(button => button.addEventListener("click", e => {
   scoreElement.textContent = playerScore;
 
   // Check if someone's won and display the game result if so
-  if (playerScore === 5 || computerScore === 5) {
+  if (playerScore === GOAL || computerScore === GOAL) {
     const gameElement = document.querySelector(".game");
     gameElement.style.display = "none";
 
     const gameResultElement = document.querySelector(".game-result");
-    if (playerScore === 5) {
+    if (playerScore === GOAL) {
       gameResultElement.textContent = "You Win!";
       gameResultElement.style.color = "green";
-    } else if (computerScore === 5) {
+    } else if (computerScore === GOAL) {
       gameResultElement.textContent = "You Lose!";
       gameResultElement.style.color = "red";
     }
